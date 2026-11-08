@@ -2,8 +2,8 @@ class Laterm < Formula
   # Developer Keyoxide: https://keyoxide.org/wkd/benn@bennherrera.dev
   desc "Claude code sidecar rendering session LaTeX expressions in separate terminal"
   homepage "https://github.com/benn-herrera/laterm"
-  url "https://github.com/benn-herrera/laterm/archive/refs/tags/v0.6.0.tar.gz"
-  sha256 "2bac2708986cb76416d8ceba727b5e5f77d6a02a72a6bee400256bdf42e86a96"
+  url "https://github.com/benn-herrera/laterm/archive/refs/tags/v0.6.1.tar.gz"
+  sha256 "05eac70edb8e09f288c220aa95bc5d0403370127c2651ddd750d92381e3d0d7d"
   license "MIT"
   head "https://github.com/benn-herrera/laterm.git", branch: "main"
 
