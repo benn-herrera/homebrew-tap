@@ -1,4 +1,6 @@
 class Devpro < Formula
+  include Language::Python::Virtualenv
+
   # Developer Keyoxide: https://keyoxide.org/wkd/benn@bennherrera.dev
   desc "Product-grade AI-assisted development process"
   homepage "https://github.com/benn-herrera/devpro"
@@ -7,16 +9,19 @@ class Devpro < Formula
   license "MIT"
   head "https://github.com/benn-herrera/devpro.git", branch: "main"
 
-  depends_on "python" => :build
+  depends_on "python"
 
+  # devpro has no runtime dependencies, so the venv takes no resources. Its
+  # build backend, setuptools, comes from pip's isolated build environment,
+  # which virtualenv_install_with_resources keeps on.
   def install
-    system "python", "build", *std_python_args, "."
+    virtualenv_install_with_resources
   end
 
-  # `devpro --version` prints exactly internal/version's Current, which is a bare
-  # semver. A stable install was built from the tag the formula names, so the
-  # two agree; a HEAD install is some other commit and may carry a version the
-  # formula does not name.
+  # `devpro --version` prints `devpro.__version__`, a bare semver. A stable
+  # install was built from the tag the formula names, so the two agree; a HEAD
+  # install is some other commit and may carry a version the formula does not
+  # name.
   test do
     reported = shell_output("#{bin}/devpro --version").strip
     assert_match(/\A\d+\.\d+\.\d+\z/, reported)
