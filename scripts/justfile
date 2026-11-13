@@ -9,7 +9,7 @@ tap-update: tap-formula-valid
   TAP_FORMULA="{{TAP_FORMULA}}" "{{SCRIPTS_DIR}}"/tap-update.sh
 
 # add invocation to your justfile with TAP_FORMULA assigned on the command line
-[doc("LIVE; NEEDS brew and the tap clone; DESTRUCTIVE to this machine's brew install of devpro: reinstall it from a scratch formula over a tarball of the working tree's tracked files")]
+[doc("LIVE; NEEDS brew and the tap clone; DESTRUCTIVE to this machine's brew install of {{TAP_FORMULA}}: reinstall it from a scratch formula over a tarball of the working tree's tracked files")]
 tap-local: tap-formula-valid
   TAP_FORMULA="{{TAP_FORMULA}}" "{{SCRIPTS_DIR}}"/tap-local.sh
 
@@ -20,10 +20,16 @@ tap-formula-valid:
     exit 1; \
   }
 
-#copy this recipe and the scripts/tap.sh to the host project
-# and set TAP_FORMULA in your justfile.
-HOSTED_TAP_DIR := "homebrew-tap"
-TAP_URL := "git@github.com:benn-herrera/homebrew-tap.git"
-[doc("set up the sibling Homebrew tap clone at homebrew-tap/ - can't be used directly from here (chicken and egg")]
-tap-repo:
-  @TAP_URL="{{TAP_URL}}" TAP_DIR="{{HOSTED_TAP_DIR}}" your-scripts-dir/tap-repo.sh
+#copy these recipes to your justfile and scripts/tap-repo.sh in the host project
+# HOSTED_TAP_DIR := "homebrew-tap"
+# TAP_FORMULA := "your-project-tap-formula
+# [doc("set up the sibling Homebrew tap clone at homebrew-tap/ - can't be used directly from here (chicken and egg")]
+# tap-repo:
+#   @TAP_DIR="{{HOSTED_TAP_DIR}}" your-scripts-dir/tap-repo.sh
+# [doc("LIVE; NEEDS the tap clone, a pushed release: set the tap formula's v<version> tarball and sha256 and commit it there")]
+# tap-update:
+#   @just --justfile "{{HOSTED_TAP_DIR}}/scripts/justfile" TAP_FORMULA={{TAP_FORMULA}} tap-update
+#
+# [doc("LIVE; NEEDS brew and the tap clone; DESTRUCTIVE to this machine's brew install of devpro: reinstall it from a scratch formula over a tarball of the working tree's tracked files")]
+# tap-local:
+#   @just --justfile "{{HOSTED_TAP_DIR}}/scripts/justfile" TAP_FORMULA={{TAP_FORMULA}} tap-local
