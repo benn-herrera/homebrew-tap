@@ -1,0 +1,29 @@
+# The tap clone's one source: its origin URL, which the clone and the remote
+# set-up both take, and the location its .gitignore entry names.
+SCRIPTS_DIR := justfile_dir()
+TAP_FORMULA := "unset"
+
+# add invocation to your justfile with TAP_FORMULA assigned on the command line
+[doc("LIVE; NEEDS the tap clone, a pushed release: set the tap formula's v<version> tarball and sha256 and commit it there")]
+tap-update: tap-formula-valid
+  TAP_FORMULA="{{TAP_FORMULA}}" "{{SCRIPTS_DIR}}"/tap-update.sh
+
+# add invocation to your justfile with TAP_FORMULA assigned on the command line
+[doc("LIVE; NEEDS brew and the tap clone; DESTRUCTIVE to this machine's brew install of devpro: reinstall it from a scratch formula over a tarball of the working tree's tracked files")]
+tap-local: tap-formula-valid
+  TAP_FORMULA="{{TAP_FORMULA}}" "{{SCRIPTS_DIR}}"/tap-local.sh
+
+[private]
+tap-formula-valid:
+  @[[ -f "{{SCRIPTS_DIR}}/../Formula/{{TAP_FORMULA}}.rb" ]] || { \
+    printf 'TAP_FORMULA is %s, must be one of %s\n' "{{TAP_FORMULA}}" "$(cd "{{SCRIPTS_DIR}}/../Formula"; echo *.rb | sed 's:\.rb::g')" >&2; \
+    exit 1; \
+  }
+
+#copy this recipe and the scripts/tap.sh to the host project
+# and set TAP_FORMULA in your justfile.
+HOSTED_TAP_DIR := "homebrew-tap"
+TAP_URL := "git@github.com:benn-herrera/homebrew-tap.git"
+[doc("set up the sibling Homebrew tap clone at homebrew-tap/ - can't be used directly from here (chicken and egg")]
+tap-repo:
+  @TAP_URL="{{TAP_URL}}" TAP_DIR="{{HOSTED_TAP_DIR}}" your-scripts-dir/tap-repo.sh
