@@ -4,8 +4,8 @@ class Devpro < Formula
   # Developer Keyoxide: https://keyoxide.org/wkd/benn@bennherrera.dev
   desc "Product-grade AI-assisted development process"
   homepage "https://github.com/benn-herrera/devpro"
-  url "https://github.com/benn-herrera/devpro/archive/refs/tags/v0.17.3.tar.gz"
-  sha256 "5e53d88594222c28fa47bcf3f3ff5a3fdd1658640cd68a0f018df81de81b4e8a"
+  url "https://github.com/benn-herrera/devpro/archive/refs/tags/v0.17.4.tar.gz"
+  sha256 "5b0ceacafdfa0b13397137d30814458ac9fd8b7e329bd295feb40f2c2d45189e"
   license "MIT"
   head "https://github.com/benn-herrera/devpro.git", branch: "main"
 
